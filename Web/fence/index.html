@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic Geofence Example</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQiD8S2lGvDu_YwNxHvOCI1Ozp7n6DbH8&callback=initMap" async defer></script>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        #controls {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+<h3>Dynamic Geofence Example</h3>
+<div id="controls">
+    <label for="centerLat">Center Latitude:</label>
+    <input type="number" id="centerLat" placeholder="Enter Latitude" step="0.000001">
+    <label for="centerLng">Center Longitude:</label>
+    <input type="number" id="centerLng" placeholder="Enter Longitude" step="0.000001">
+    <label for="radius">Radius (meters):</label>
+    <input type="number" id="radius" placeholder="Enter Radius">
+    <button onclick="updateGeofence()">Update Geofence</button>
+</div>
+<div id="map"></div>
+<div id="status"></div>
+<script>
+    let map, geofence, userMarker;
+
+    function initMap() {
+        const defaultCenter = { lat: 40.74061, lng: -73.935242 }; // Default geofence center (example: NYC)
+
+        // Initialize the map
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 14,
+            center: defaultCenter,
+        });
+
+        // Draw the initial geofence as a circle
+        geofence = new google.maps.Circle({
+            strokeColor: "#FF0000",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#FF0000",
+            fillOpacity: 0.35,
+            map,
+            center: defaultCenter,
+            radius: 1000, // Default radius in meters
+        });
+
+        // Add a marker for the geofence center
+        new google.maps.Marker({
+            position: defaultCenter,
+            map,
+            title: "Geofence Center",
+        });
+
+        // Start tracking the user's location
+        trackLocation();
+    }
+
+    function trackLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.watchPosition(
+                (position) => {
+                    const userLocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    };
+
+                    // If userMarker doesn't exist, create it
+                    if (!userMarker) {
+                        userMarker = new google.maps.Marker({
+                            position: userLocation,
+                            map,
+                            title: "Your Location",
+                            icon: {
+                                path: google.maps.SymbolPath.CIRCLE,
+                                scale: 6,
+                                fillColor: "#00FF00",
+                                fillOpacity: 1,
+                                strokeWeight: 2,
+                                strokeColor: "#FFFFFF",
+                            },
+                        });
+                    } else {
+                        // Update the marker's position
+                        userMarker.setPosition(userLocation);
+                    }
+
+                    // Check if the user is inside the geofence
+                    checkGeofence(userLocation);
+                },
+                (error) => {
+                    console.error("Error getting location:", error);
+                    document.getElementById("status").innerText =
+                        "Error getting location: " + error.message;
+                },
+                { enableHighAccuracy: true }
+            );
+        } else {
+            document.getElementById("status").innerText = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function checkGeofence(location) {
+        const center = geofence.getCenter();
+        const radius = geofence.getRadius();
+
+        const distance = google.maps.geometry.spherical.computeDistanceBetween(
+            new google.maps.LatLng(location.lat, location.lng),
+            center
+        );
+
+        if (distance <= radius) {
+            document.getElementById("status").innerText = "You are inside the geofence.";
+        } else {
+            document.getElementById("status").innerText = "You are outside the geofence.";
+        }
+    }
+
+    function updateGeofence() {
+        const lat = parseFloat(document.getElementById("centerLat").value);
+        const lng = parseFloat(document.getElementById("centerLng").value);
+        const radius = parseFloat(document.getElementById("radius").value);
+
+        if (!isNaN(lat) && !isNaN(lng) && !isNaN(radius)) {
+            const newCenter = { lat, lng };
+
+            // Update the geofence circle
+            geofence.setCenter(newCenter);
+            geofence.setRadius(radius);
+
+            // Update the map center
+            map.setCenter(newCenter);
+
+            // Add a marker for the new center
+            new google.maps.Marker({
+                position: newCenter,
+                map,
+                title: "Geofence Center",
+            });
+
+            document.getElementById("status").innerText = "Geofence updated.";
+        } else {
+            document.getElementById("status").innerText = "Please enter valid latitude, longitude, and radius values.";
+        }
+    }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/geolib/3.3.3/geolib.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+ErrorDocument 404 /404.php
+
+RewriteEngine on
+
+RewriteRule ^Login index.php [L]
+
+RewriteRule ^Logout logout.php [L]
+
+RewriteRule ^Dashboard dashboard.php [L]
+
+RewriteRule ^Add-Vehicle add-vehile.php [L]
+
+RewriteRule ^Vehicle-List vehile-list.php [L]
+
+RewriteRule ^Show-Bus show-bus.php [L]
+
+RewriteRule ^Book-Bus book-bus.php [L]
+
+RewriteRule ^My-Booking my-booking.php [L]
+
+RewriteRule ^Book\-Distance my-book-distance.php [L]
+
+RewriteRule ^Route route.php [L]
+
+RewriteRule ^Bus-Location bus-location.php [L]
+
+RewriteRule ^Log log-data.php [L]
+
+RewriteRule ^View-Location view-location.php [L]
+
+RewriteRule ^Add-User add-user.php [L]
+
+RewriteRule ^User-List user-list.php [L]
+
+RewriteRule ^Passenger-Location passenger-location.php [L]
+
+RewriteRule ^Profile profile.php [L]
+
+RewriteRule ^Insert insert.php [L]
+
+RewriteRule ^Update update.php [L]
+
+RewriteRule ^Delete delete.php [L]
