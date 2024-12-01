@@ -1,6 +1,6 @@
 # IOT Based Vehicle Tracking and Management System
 
-## GPS Module Setup on Raspberry Pi
+# GPS Module Setup on Raspberry Pi
 
 This guide walks through setting up a GPS module (such as the Neo 6M) with a Raspberry Pi using the latest Raspbian
 OS.
@@ -76,7 +76,7 @@ OS.
    sudo cat /dev/ttyAMA0
     ```
 
-# Setting Up a Systemd Service for Python Script
+## Setting Up a Systemd Service for Python Script
 
 This guide shows how to create a systemd service to automatically start a Python script at boot on Linux system. The service will restart if the script fails, but it will not restart if the script completes successfully.
 
@@ -132,7 +132,7 @@ This setup is now complete, and Python script will run at startup and restart on
 After Complete all process check the web server log its sent data or not.
 
 
-## WEB Setup for IoT-Based Vehicle Tracking and Management System
+# WEB Setup for IoT-Based Vehicle Tracking and Management System
 
 To set up and run the web-based user interface for the IoT-Based Vehicle Tracking and Management System, follow the steps below to install and configure XAMPP, which provides a local web server environment with Apache, MySQL, and PHP support.
 
