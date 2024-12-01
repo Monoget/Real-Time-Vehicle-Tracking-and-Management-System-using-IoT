@@ -132,3 +132,64 @@ This setup is now complete, and Python script will run at startup and restart on
 After Complete all process check the web server log its sent data or not.
 
 
+## WEB Setup for IoT-Based Vehicle Tracking and Management System
+
+To set up and run the web-based user interface for the IoT-Based Vehicle Tracking and Management System, follow the steps below to install and configure XAMPP, which provides a local web server environment with Apache, MySQL, and PHP support.
+
+## Prerequisites
+
+- **XAMPP**: XAMPP is a free and open-source cross-platform web server solution stack package that includes Apache, MySQL, and PHP.
+- **Operating System**: These steps are applicable for Windows, macOS, and Linux operating systems.
+
+## Step-by-Step Installation and Setup
+
+### 1. Download and Install XAMPP
+
+- Visit the official XAMPP website: [https://www.apachefriends.org/index.html](https://www.apachefriends.org/index.html)
+- Download the appropriate version of XAMPP for your operating system.
+- Follow the installation instructions:
+    - **Windows**: Run the installer and follow the on-screen instructions.
+    - **macOS**: Open the `.dmg` file and follow the installation instructions.
+    - **Linux**: Download the `.tar.gz` file and follow the instructions on the website for installation.
+
+### 2. Start XAMPP Control Panel (Windows) or XAMPP Manager (macOS/Linux)
+
+- Open the **XAMPP Control Panel** (on Windows) or **XAMPP Manager** (on macOS/Linux).
+- Start the **Apache** and **MySQL** services by clicking the "Start" buttons next to each.
+
+### 3. Configure PHP for Server-Side Scripting
+
+- Navigate to the XAMPP installation directory.
+    - **Windows**: Typically located in `C:\xampp\php\`
+    - **macOS/Linux**: Typically located in `/opt/lampp/etc/php.ini`
+
+- Open the `php.ini` file in a text editor and ensure that the following configurations are enabled:
+    - Uncomment the line `extension=mysqli` (remove the `;` at the beginning of the line) to enable MySQLi extension for PHP.
+    - If needed, adjust the `upload_max_filesize` and `post_max_size` to accommodate larger file uploads (optional for your application).
+
+### 4. Set Up MySQL Database
+
+1. **Access phpMyAdmin**:
+    - Open your web browser and navigate to [http://localhost/phpmyadmin](http://localhost/phpmyadmin).
+    - phpMyAdmin is a web interface to manage your MySQL databases.
+
+2. **Create a New Database**:
+    - In phpMyAdmin, click on the "Databases" tab.
+    - Create a new database for your project, for example, `gps_tracker`.
+
+### 5. Place Your PHP and Web Files in the XAMPP Directory
+
+- Move your project files (HTML, CSS, JavaScript, PHP) into the `htdocs` folder located inside the XAMPP installation directory:
+    - **Windows**: `C:\xampp\htdocs\`
+    - **macOS/Linux**: `/opt/lampp/htdocs/`
+
+- For example, if your project is named `gps_tracker`, create a folder inside `htdocs` called `gps_tracker` and place all your project files there.
+
+### 6. Update Database Connection in PHP
+
+In your PHP scripts, update the database connection details to match your MySQL configuration. For example, modify the following variables:
+```php
+$servername = "localhost";
+$username = "root";    // default username for MySQL
+$password = "";        // default password is empty
+$dbname = "vehicle_tracking_system";  // your database name
