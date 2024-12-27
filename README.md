@@ -1,4 +1,4 @@
-# IOT Based Vehicle Tracking and Management System
+# Real Time Vehicle Tracking and Management System using IoT
 
 # GPS Module Setup on Raspberry Pi
 
